@@ -1,0 +1,133 @@
+# Steam Library
+
+- AI Limit
+- Another Crab's Treasure
+- At Home Alone II
+- Atomic Heart
+- ATRI -My Dear Moments-
+- Backrooms: Extractions
+- Banana
+- Black Myth: Wukong
+- BLACK SOULS
+- BLACK SOULS II
+- BlazBlue Entropy Effect
+- Bongo Cat
+- Boomerang Fu
+- Bulb Boy
+- CaseCracker
+- Chained Together
+- Chill with You: Lo-Fi Story (Demo)
+- Chinese Parents
+- Clair Obscur: Expedition 33
+- Content Warning
+- Control Ultimate Edition
+- Cookie Clicker
+- Counter-Strike 2
+- Cube Escape: Paradox
+- Cuphead
+- Cyberpunk 2077
+- Dead Cells
+- Deadzone: Rogue
+- Deponia
+- Destiny 2
+- Detroit: Become Human
+- Devil May Cry 5
+- DEVOUR
+- Doki Doki Literature Club
+- Don't Starve Together
+- Draw & Guess
+- Dying Light
+- ELDEN RING
+- Escape From Duckov
+- Escape the Backrooms
+- The Escapists 2
+- Fork Road
+- Ghostrunner
+- Ghostrunner 2
+- Ghostwire: Tokyo
+- Goose Goose Duck
+- Hades
+- Half-Life 2
+- Half-Life 2: Deathmatch
+- Half-Life Deathmatch: Source
+- Helltaker
+- Hide Alone
+- HITMAN World of Assassination
+- Hollow Knight
+- Honkai Impact 3rd
+- The Hungry Lamb: Traveling in the Late Ming
+- Illusion Carnival
+- Inside the Backrooms
+- Left 4 Dead 2
+- Lethal Company
+- Liar's Bar
+- Limbus Company
+- Magical Girl Witch Trials
+- Magicraft
+- Megaquarium
+- Metro: Last Light Complete Edition
+- Milthm
+- Miss Neko 3
+- MiSide
+- Muse Dash
+- Neon Abyss
+- NieR:Automata
+- Nocturnal
+- The NOnsistenceN of you AND me
+- NUKITASHI
+- NUKITASHI 2
+- Once Human
+- OneShift
+- Ori and the Will of the Wisps
+- Overcooked
+- Oxygen Not Included
+- Palworld
+- Party Animals
+- Persona 5 Royal
+- Phasmophobia
+- PICO PARK: Classic Edition
+- Planet Coaster
+- Portal 2
+- PRAGMATA SKETCHBOOK (Demo)
+- Pummel Party
+- Red Dead Redemption 2
+- Rise of the Tomb Raider
+- Sabbat of the Witch
+- Sekiro: Shadows Die Twice
+- Senren * Banka
+- Shawarma Legend
+- Sheepy: A Short Adventure
+- Ship of Fools
+- The Sims 4
+- Sky: Children of the Light
+- Slay the Spire
+- Slay the Spire 2
+- Slime Rancher
+- Split Fiction
+- Stardew Valley
+- Stellar Blade
+- Subnautica
+- Subnautica: Below Zero
+- System Clues (Demo)
+- Tabletop Simulator
+- TCG Card Shop Simulator
+- Terraria
+- theHunter: Call of the Wild
+- There Is No Game: Wrong Dimension
+- Tiny Pasture
+- Tiny Shadows Interwoven Hearts
+- Tom Clancy's Rainbow Six Siege
+- Tom Clancy's Rainbow Six Siege - Test
+- Touhou Blooming Chaos 2
+- Trainee Death Simulator (Demo)
+- Undertale
+- VPet-Simulator
+- VRChat
+- The Witcher 3: Wild Hunt
+- WRC 8 FIA World Rally Championship
+- your wife
+
+# Other Games
+Minecraft
+Phira
+Phigros
