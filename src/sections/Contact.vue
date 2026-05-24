@@ -12,49 +12,62 @@ async function copy(v: string) {
 </script>
 
 <template>
-  <section id="contact" class="px-6 md:px-16 py-32 max-w-7xl mx-auto">
+  <section class="h-full w-full px-6 md:px-16 max-w-7xl mx-auto flex flex-col justify-center">
     <SectionHeader index="05 · contact" title="Find me." sub="Six platforms, three channels, one human." />
 
     <Marquee :items="socials.map((s) => s.label)" />
 
-    <div class="grid md:grid-cols-2 gap-12 mt-16">
-      <!-- Socials -->
-      <div class="reveal">
-        <div class="font-mono text-[11px] uppercase tracking-widest text-white/40 mb-4">socials</div>
-        <ul class="flex flex-col">
-          <li v-for="s in socials" :key="s.url" class="group">
-            <a
-              :href="s.url"
-              target="_blank"
-              rel="noreferrer"
-              data-magnetic
-              class="brand-link flex items-baseline justify-between gap-6 border-b hairline py-5 hover:bg-white/[0.03] transition-colors"
-              :style="{ ['--brand' as any]: s.color }"
-            >
-              <span class="font-display text-3xl md:text-5xl brand-text transition-colors">{{ s.label }}</span>
-              <span class="font-mono text-[11px] uppercase tracking-widest text-white/40 group-hover:text-white">open ↗</span>
-            </a>
-          </li>
-        </ul>
+    <div class="grid lg:grid-cols-[1.15fr_0.85fr] gap-5 mt-8">
+      <div class="reveal grid sm:grid-cols-2 gap-3">
+        <a
+          v-for="s in socials"
+          :key="s.url"
+          :href="s.url"
+          target="_blank"
+          rel="noreferrer"
+          data-magnetic
+          class="color-card group min-h-[118px] border p-4 flex flex-col justify-between transition duration-300 hover:-translate-y-1"
+          :style="{ ['--accent' as any]: s.color, ['--brand' as any]: s.color }"
+        >
+          <div class="flex items-start justify-between gap-4">
+            <div class="font-mono text-[10px] uppercase tracking-widest text-white/40">social</div>
+            <div class="font-mono text-[10px] uppercase tracking-widest text-white/45 group-hover:text-white">open ↗</div>
+          </div>
+          <div>
+            <div class="font-display text-2xl md:text-3xl leading-none color-glow" :style="{ ['--glow' as any]: s.color }">{{ s.label }}</div>
+            <div class="mt-2 min-h-4 font-mono text-[11px] text-white/50 truncate">{{ s.handle || s.url.replace(/^https?:\/\//, '') }}</div>
+          </div>
+        </a>
       </div>
 
-      <!-- Direct contact -->
-      <div class="reveal">
-        <div class="font-mono text-[11px] uppercase tracking-widest text-white/40 mb-4">direct</div>
-        <ul class="flex flex-col gap-3">
+      <div class="reveal color-card border p-5 md:p-6" style="--accent: #41b883">
+        <div class="flex items-start justify-between gap-4 mb-5">
+          <div>
+            <div class="font-mono text-[10px] uppercase tracking-widest text-white/40">direct</div>
+            <h3 class="font-display text-3xl color-glow mt-1" style="--glow: #41b883">Contact info</h3>
+          </div>
+          <div class="font-mono text-[10px] uppercase tracking-widest text-white/40">{{ contacts.length }} ways</div>
+        </div>
+
+        <ul class="relative flex flex-col gap-3">
           <li v-for="c in contacts" :key="c.label">
             <button
               data-magnetic
-              class="brand-link w-full text-left border hairline p-5 hover:bg-white/[0.03] transition-colors group"
+              class="group w-full text-left border hairline bg-black/20 px-4 py-4 transition hover:bg-white/[0.06]"
               :style="{ ['--brand' as any]: c.color }"
               @click="copy(c.value)"
             >
-              <div class="font-mono text-[10px] uppercase tracking-widest" :style="{ color: c.color }">{{ c.label }}</div>
-              <div class="flex items-center justify-between mt-1">
-                <span class="font-display text-2xl md:text-3xl brand-text transition-colors">{{ c.value }}</span>
-                <span class="font-mono text-[11px] uppercase tracking-widest text-white/40 group-hover:text-white">
-                  {{ copied === c.value ? '✓ copied' : 'copy' }}
+              <div class="flex items-center justify-between gap-4">
+                <span class="font-mono text-[10px] uppercase tracking-widest" :style="{ color: c.color }">{{ c.label }}</span>
+                <span class="font-mono text-[10px] uppercase tracking-widest text-white/40 group-hover:text-white">
+                  {{ copied === c.value ? 'copied' : 'copy' }}
                 </span>
+              </div>
+              <div
+                class="mt-2 break-all font-display text-xl md:text-2xl leading-tight color-glow"
+                :style="{ ['--glow' as any]: c.color }"
+              >
+                {{ c.value }}
               </div>
             </button>
           </li>

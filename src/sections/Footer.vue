@@ -3,7 +3,7 @@ const year = new Date().getFullYear()
 </script>
 
 <template>
-  <footer class="relative overflow-hidden border-t hairline pt-16 pb-6 px-6 md:px-16">
+  <footer class="h-full w-full relative overflow-hidden px-6 md:px-16 flex flex-col justify-center">
     <div class="max-w-[1600px] mx-auto">
       <h2 class="font-display leading-[1.05] tracking-normal text-[24vw] md:text-[18vw]">
         Unoxy<span class="italic">Rich</span>

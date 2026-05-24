@@ -8,7 +8,7 @@ export const projects: Project[] = [
     color: '#ff5e57',
   },
   {
-    title: 'LPTI · 谁是你的二次元老婆？',
+    title: 'LPTI',
     description: 'A quiz that outputs your anime waifu match based on your watch profile.',
     url: 'https://github.com/404-Waifu-Not-Found/whoisyourwaifu',
     color: '#ff7ac6',

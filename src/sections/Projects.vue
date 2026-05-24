@@ -5,10 +5,10 @@ import { vTilt } from '../composables/useTilt'
 </script>
 
 <template>
-  <section id="projects" class="min-h-screen px-6 md:px-16 py-32 max-w-7xl mx-auto">
+  <section class="h-full w-full px-6 md:px-16 max-w-7xl mx-auto flex flex-col justify-center">
     <SectionHeader index="02 · projects" title="Projects." :sub="`${projects.length} shipped (or shipping). All open source.`" />
 
-    <div class="grid md:grid-cols-2 gap-6 reveal">
+    <div class="grid md:grid-cols-3 gap-4 reveal">
       <a
         v-for="(p, i) in projects"
         :key="p.url"
@@ -19,7 +19,7 @@ import { vTilt } from '../composables/useTilt'
       >
         <article
           v-tilt
-          class="tilt project-card relative border hairline bg-ink-100 p-8 h-full min-h-[260px] flex flex-col justify-between overflow-hidden"
+          class="tilt project-card relative border hairline bg-ink-100 p-5 h-full flex flex-col justify-between overflow-hidden"
           :style="{ ['--accent' as any]: p.color }"
         >
           <div class="absolute inset-0 bg-gradient-to-br from-white/[0.03] via-transparent to-transparent" />
@@ -28,11 +28,11 @@ import { vTilt } from '../composables/useTilt'
           </div>
 
           <div class="relative">
-            <h3 class="font-display text-3xl md:text-4xl leading-tight project-title transition-colors">{{ p.title }}</h3>
-            <p class="mt-4 text-white/70 text-sm md:text-base leading-relaxed max-w-prose">{{ p.description }}</p>
+            <h3 class="font-display text-xl md:text-2xl leading-tight project-title transition-colors">{{ p.title }}</h3>
+            <p class="mt-3 text-white/70 text-xs md:text-sm leading-relaxed">{{ p.description }}</p>
           </div>
 
-          <div class="relative mt-8 flex items-center justify-between font-mono text-[11px] uppercase tracking-widest">
+          <div class="relative mt-4 flex items-center justify-between font-mono text-[10px] uppercase tracking-widest">
             <span class="text-white/40">github → repo</span>
             <span class="inline-flex items-center gap-2 group-hover:gap-4 transition-all" :style="{ color: p.color }">
               <span>open</span>

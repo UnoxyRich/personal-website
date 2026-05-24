@@ -23,6 +23,49 @@ a, button, [data-magnetic] { cursor: none; }
 
 ::selection { background: #fff; color: #000; }
 
+.deck-root::before {
+  content: '';
+  position: fixed;
+  inset: -20%;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(circle at 12% 16%, rgba(255, 0, 102, 0.3), transparent 26%),
+    radial-gradient(circle at 84% 18%, rgba(0, 194, 255, 0.24), transparent 24%),
+    radial-gradient(circle at 72% 78%, rgba(255, 214, 10, 0.18), transparent 28%),
+    radial-gradient(circle at 18% 82%, rgba(69, 255, 166, 0.2), transparent 24%);
+  filter: blur(32px) saturate(1.25);
+  opacity: 0.72;
+}
+
+.color-glow {
+  color: var(--glow, #fff);
+  text-shadow:
+    0 0 10px color-mix(in srgb, var(--glow, #fff) 75%, transparent),
+    0 0 28px color-mix(in srgb, var(--glow, #fff) 45%, transparent),
+    0 0 52px color-mix(in srgb, var(--glow, #fff) 28%, transparent);
+}
+
+.color-card {
+  position: relative;
+  overflow: hidden;
+  border-color: color-mix(in srgb, var(--accent, #fff) 34%, rgba(255,255,255,0.1));
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--accent, #fff) 18%, transparent), rgba(255,255,255,0.035) 42%, rgba(0,0,0,0.18)),
+    rgba(255,255,255,0.03);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.08), 0 18px 50px rgba(0,0,0,0.2);
+}
+
+.color-card::before {
+  content: '';
+  position: absolute;
+  inset: -40% -20% auto auto;
+  width: 180px;
+  height: 180px;
+  background: radial-gradient(circle, color-mix(in srgb, var(--accent, #fff) 38%, transparent), transparent 68%);
+  pointer-events: none;
+}
+
 .grain::before {
   content: '';
   position: fixed; inset: 0;
@@ -31,14 +74,6 @@ a, button, [data-magnetic] { cursor: none; }
   pointer-events: none;
   mix-blend-mode: overlay;
   z-index: 100;
-}
-
-.vignette::after {
-  content: '';
-  position: fixed; inset: 0;
-  background: radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.85) 100%);
-  pointer-events: none;
-  z-index: 99;
 }
 
 /* Cursor */
@@ -70,8 +105,12 @@ a, button, [data-magnetic] { cursor: none; }
   animation: marquee 40s linear infinite;
 }
 
-/* Reveal */
-.reveal { opacity: 0; transform: translateY(20px); transition: opacity .9s ease, transform .9s ease; }
+/* Reveal — triggers when slide becomes active */
+.reveal { opacity: 0; transform: translateY(20px); transition: opacity .8s ease .15s, transform .8s cubic-bezier(0.22, 1, 0.36, 1) .15s; }
+.slide.is-active .reveal { opacity: 1; transform: none; }
+.slide.is-active .reveal:nth-child(2) { transition-delay: .25s; }
+.slide.is-active .reveal:nth-child(3) { transition-delay: .35s; }
+.slide.is-active .reveal:nth-child(4) { transition-delay: .45s; }
 .reveal.in { opacity: 1; transform: none; }
 
 /* Section frame */

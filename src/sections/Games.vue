@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import SectionHeader from '../components/SectionHeader.vue'
 import { steamGames, otherGames, coverUrl, storeUrl, type Game } from '../content/games'
 
 const query = ref('')
@@ -43,25 +42,33 @@ function shuffle() {
 </script>
 
 <template>
-  <section id="games" class="min-h-screen py-32">
-    <div class="px-6 md:px-16 max-w-7xl mx-auto">
-      <SectionHeader index="04 · games" title="Library." :sub="`${steamGames.length} on Steam — illuminated by the gods.`" />
+  <section class="h-full w-full flex flex-col justify-start pt-8 md:pt-12">
+    <div class="px-6 md:px-16 w-full max-w-7xl mx-auto">
+      <header class="reveal grid gap-5 border-b hairline pb-5 mb-7 md:grid-cols-[minmax(220px,1fr)_minmax(360px,520px)] md:items-start">
+        <div>
+          <div class="font-mono text-[10px] uppercase tracking-widest text-white/50">04 · games</div>
+          <h2 class="font-display text-4xl md:text-6xl leading-[1.05] mt-1 color-glow" style="--glow: #66c0f4">Library.</h2>
+          <p class="mt-3 max-w-sm font-mono text-[10px] uppercase tracking-widest text-white/40">
+            {{ steamGames.length }} on Steam · color, covers, motion
+          </p>
+        </div>
 
-      <div class="flex flex-col md:flex-row md:items-center gap-4 mb-10 reveal">
-        <div class="relative flex-1">
-          <input
-            v-model="query"
-            type="search"
-            placeholder="search 130+ games…"
-            class="w-full bg-transparent border hairline px-4 py-3 font-mono text-sm placeholder:text-white/30 focus:outline-none focus:border-white/40"
-          />
-          <span class="absolute right-4 top-1/2 -translate-y-1/2 font-mono text-[11px] text-white/40">{{ filtered.length }} / {{ steamGames.length }}</span>
+        <div class="flex flex-col gap-3 md:pt-2">
+          <div class="relative">
+            <input
+              v-model="query"
+              type="search"
+              placeholder="search 130+ games…"
+              class="w-full bg-white/[0.04] border hairline px-4 py-4 pr-24 font-mono text-xs placeholder:text-white/30 focus:outline-none focus:border-[#66c0f4]/70 focus:shadow-[0_0_28px_rgba(102,192,244,0.22)]"
+            />
+            <span class="absolute right-4 top-1/2 -translate-y-1/2 font-mono text-[11px] text-white/45">{{ filtered.length }} / {{ steamGames.length }}</span>
+          </div>
+          <div class="flex gap-2 font-mono text-[11px] uppercase tracking-widest">
+            <button data-magnetic class="border hairline px-4 py-3 transition-colors" :class="sortMode === 'az' ? 'bg-[#ffd60a] text-black border-[#ffd60a]' : 'hover:bg-white/10'" @click="sortMode = 'az'">A → Z</button>
+            <button data-magnetic class="border hairline px-4 py-3 transition-colors" :class="sortMode === 'shuffle' ? 'bg-[#ff2c55] text-white border-[#ff2c55]' : 'hover:bg-white/10'" @click="shuffle">Shuffle ⤭</button>
+          </div>
         </div>
-        <div class="flex gap-2 font-mono text-[11px] uppercase tracking-widest">
-          <button data-magnetic class="border hairline px-4 py-3 transition-colors" :class="sortMode === 'az' ? 'bg-white text-black' : 'hover:bg-white/10'" @click="sortMode = 'az'">A → Z</button>
-          <button data-magnetic class="border hairline px-4 py-3 transition-colors" :class="sortMode === 'shuffle' ? 'bg-white text-black' : 'hover:bg-white/10'" @click="shuffle">Shuffle ⤭</button>
-        </div>
-      </div>
+      </header>
     </div>
 
     <!-- Auto-scrolling lanes with V-shaped god rays -->
@@ -80,7 +87,7 @@ function shuffle() {
             :target="g.appid ? '_blank' : undefined"
             rel="noreferrer"
             data-magnetic
-            class="game-card relative block shrink-0 w-[150px] sm:w-[170px] md:w-[200px] aspect-[2/3] border hairline overflow-hidden bg-ink-100"
+            class="game-card relative block shrink-0 w-[88px] sm:w-[100px] md:w-[112px] aspect-[2/3] border hairline overflow-hidden bg-ink-100"
           >
             <img
               v-if="g.appid"
@@ -123,10 +130,10 @@ function shuffle() {
       <div class="pointer-events-none absolute inset-y-0 right-0 w-16 md:w-32 bg-gradient-to-l from-black to-transparent z-20" />
     </div>
 
-    <div class="px-6 md:px-16 max-w-7xl mx-auto mt-12 pt-6 border-t hairline reveal">
-      <div class="font-mono text-[11px] uppercase tracking-widest text-white/40 mb-3">elsewhere</div>
-      <div class="flex flex-wrap gap-3">
-        <span v-for="g in otherGames" :key="g" class="pill border hairline px-3 py-1.5 text-sm font-mono text-white/80" data-magnetic>{{ g }}</span>
+    <div class="px-6 md:px-16 max-w-7xl mx-auto mt-3 reveal">
+      <div class="flex flex-wrap items-center gap-2 font-mono text-[11px] uppercase tracking-widest text-white/40">
+        <span>elsewhere ·</span>
+        <span v-for="g in otherGames" :key="g" class="pill border hairline px-2 py-1 text-xs text-white/80" data-magnetic>{{ g }}</span>
       </div>
     </div>
   </section>
@@ -136,14 +143,14 @@ function shuffle() {
 .lanes {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 0.5rem;
   position: relative;
 }
 
 .lane { overflow: hidden; width: 100%; }
 .lane-track {
   display: flex;
-  gap: 1rem;
+  gap: 0.5rem;
   width: max-content;
   animation: scroll-x 160s linear infinite;
 }
@@ -206,21 +213,21 @@ function shuffle() {
 }
 .ray {
   position: absolute;
-  top: -4%;
-  left: 8%;
+  top: -14%;
+  left: 3%;
   width: 7%;
   height: 180%;
   background: radial-gradient(
     ellipse at 50% 0%,
-    rgba(255, 255, 255, 0.55) 0%,
-    rgba(255, 255, 255, 0.22) 12%,
-    rgba(255, 255, 255, 0.08) 45%,
+    rgba(255, 255, 255, 0.18) 0%,
+    rgba(255, 255, 255, 0.12) 18%,
+    rgba(255, 255, 255, 0.05) 48%,
     rgba(255, 255, 255, 0.0) 100%
   );
   border-radius: 999px;
   transform-origin: 50% 0%;
-  filter: blur(14px);
-  opacity: 0.9;
+  filter: blur(22px);
+  opacity: 0.58;
   animation: ray-pulse 7s ease-in-out infinite;
 }
 /* Fan: angles increase clockwise from straight down (0deg = down here since we rotate from top). */
@@ -233,29 +240,30 @@ function shuffle() {
 .ray-7 { transform: translateX(-50%) rotate(150deg); width: 5%; opacity: 0.55; animation-delay: 5.4s; }
 
 @keyframes ray-pulse {
-  0%, 100% { filter: blur(14px); }
-  50%      { filter: blur(10px); }
+  0%, 100% { filter: blur(22px); }
+  50%      { filter: blur(18px); }
 }
 
 /* Soft bright bloom at the corner where the rays originate */
 .bloom {
   position: absolute;
-  top: -8%;
-  left: 8%;
-  width: 320px;
-  height: 320px;
+  top: -18%;
+  left: 1%;
+  width: 420px;
+  height: 420px;
   transform: translate(-50%, -50%);
   pointer-events: none;
   z-index: 12;
   border-radius: 9999px;
   background: radial-gradient(
     circle,
-    rgba(255, 255, 255, 0.45) 0%,
-    rgba(255, 255, 255, 0.18) 35%,
-    rgba(255, 255, 255, 0.0) 70%
+    rgba(255, 255, 255, 0.14) 0%,
+    rgba(102, 192, 244, 0.1) 36%,
+    rgba(255, 255, 255, 0.0) 72%
   );
   mix-blend-mode: screen;
-  filter: blur(6px);
+  filter: blur(28px);
+  opacity: 0.75;
 }
 
 @media (prefers-reduced-motion: reduce) {
