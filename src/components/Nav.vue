@@ -42,4 +42,8 @@ const labels: Record<string, string> = {
   text-transform: uppercase;
   letter-spacing: 0.2em;
 }
+
+@media (max-width: 1280px) {
+  .deck-nav { display: none; }
+}
 </style>

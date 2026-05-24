@@ -3,7 +3,6 @@ import { computed, ref } from 'vue'
 import { steamGames, otherGames, coverUrl, storeUrl, type Game } from '../content/games'
 
 const query = ref('')
-const sortMode = ref<'az' | 'shuffle'>('shuffle')
 const shuffleSeed = ref(1)
 
 function seededShuffle<T>(arr: T[], seed: number): T[] {
@@ -20,9 +19,7 @@ function seededShuffle<T>(arr: T[], seed: number): T[] {
 const filtered = computed<Game[]>(() => {
   const q = query.value.trim().toLowerCase()
   let list = steamGames.filter((g) => g.title.toLowerCase().includes(q))
-  if (sortMode.value === 'az') list.sort((a, b) => a.title.localeCompare(b.title))
-  else list = seededShuffle(list, shuffleSeed.value)
-  return list
+  return seededShuffle(list, shuffleSeed.value)
 })
 
 const rows = computed(() => {
@@ -35,19 +32,43 @@ const rows = computed(() => {
   ]
 })
 
-function shuffle() {
-  sortMode.value = 'shuffle'
-  shuffleSeed.value = Math.floor(Math.random() * 100000) + 1
-}
+const backdropGames = computed(() => {
+  const withCovers = steamGames.filter((g): g is Game & { appid: number } => Boolean(g.appid))
+  return seededShuffle(withCovers, 42).slice(0, 24)
+})
+
 </script>
 
 <template>
-  <section class="h-full w-full flex flex-col justify-start pt-8 md:pt-12">
-    <div class="px-6 md:px-16 w-full max-w-7xl mx-auto">
+  <section class="relative h-full w-full flex flex-col justify-start overflow-hidden pt-8 md:pt-12">
+    <div class="game-backdrop" aria-hidden="true">
+      <div class="backdrop-track backdrop-track--top">
+        <img
+          v-for="(g, i) in [...backdropGames, ...backdropGames]"
+          :key="'top-' + g.appid + '-' + i"
+          :src="coverUrl(g.appid)"
+          alt=""
+          loading="lazy"
+          draggable="false"
+        />
+      </div>
+      <div class="backdrop-track backdrop-track--bottom">
+        <img
+          v-for="(g, i) in [...backdropGames.slice().reverse(), ...backdropGames.slice().reverse()]"
+          :key="'bottom-' + g.appid + '-' + i"
+          :src="coverUrl(g.appid)"
+          alt=""
+          loading="lazy"
+          draggable="false"
+        />
+      </div>
+    </div>
+
+    <div class="relative z-10 px-6 md:px-16 w-full max-w-7xl mx-auto">
       <header class="reveal grid gap-5 border-b hairline pb-5 mb-7 md:grid-cols-[minmax(220px,1fr)_minmax(360px,520px)] md:items-start">
         <div>
           <div class="font-mono text-[10px] uppercase tracking-widest text-white/50">04 · games</div>
-          <h2 class="font-display text-4xl md:text-6xl leading-[1.05] mt-1 color-glow" style="--glow: #66c0f4">Library.</h2>
+          <h2 class="font-display text-4xl md:text-6xl leading-[1.05] mt-1 color-glow" style="--glow: var(--tone-primary)">Library.</h2>
           <p class="mt-3 max-w-sm font-mono text-[10px] uppercase tracking-widest text-white/40">
             {{ steamGames.length }} on Steam · color, covers, motion
           </p>
@@ -59,20 +80,16 @@ function shuffle() {
               v-model="query"
               type="search"
               placeholder="search 130+ games…"
-              class="w-full bg-white/[0.04] border hairline px-4 py-4 pr-24 font-mono text-xs placeholder:text-white/30 focus:outline-none focus:border-[#66c0f4]/70 focus:shadow-[0_0_28px_rgba(102,192,244,0.22)]"
+              class="w-full bg-white/[0.04] border hairline px-4 py-4 pr-24 font-mono text-xs placeholder:text-white/30 focus:outline-none focus:border-[color:var(--tone-primary)] focus:shadow-[0_0_28px_rgba(255,255,255,0.2)]"
             />
             <span class="absolute right-4 top-1/2 -translate-y-1/2 font-mono text-[11px] text-white/45">{{ filtered.length }} / {{ steamGames.length }}</span>
-          </div>
-          <div class="flex gap-2 font-mono text-[11px] uppercase tracking-widest">
-            <button data-magnetic class="border hairline px-4 py-3 transition-colors" :class="sortMode === 'az' ? 'bg-[#ffd60a] text-black border-[#ffd60a]' : 'hover:bg-white/10'" @click="sortMode = 'az'">A → Z</button>
-            <button data-magnetic class="border hairline px-4 py-3 transition-colors" :class="sortMode === 'shuffle' ? 'bg-[#ff2c55] text-white border-[#ff2c55]' : 'hover:bg-white/10'" @click="shuffle">Shuffle ⤭</button>
           </div>
         </div>
       </header>
     </div>
 
     <!-- Auto-scrolling lanes with V-shaped god rays -->
-    <div class="lanes reveal relative">
+    <div class="lanes reveal relative z-10">
       <div
         v-for="(row, ri) in rows"
         :key="ri"
@@ -106,8 +123,7 @@ function shuffle() {
         </div>
       </div>
 
-      <!-- Soft cone of light cast from the top-left corner.
-           A conic-gradient mask defines a feathered wedge; inside it = color, outside = grayscale veil. -->
+      <!-- Soft cone of light cast from the top-left corner. -->
       <div class="veil" aria-hidden="true" />
 
       <!-- Visible god-ray beams fanning out from the same corner -->
@@ -130,7 +146,7 @@ function shuffle() {
       <div class="pointer-events-none absolute inset-y-0 right-0 w-16 md:w-32 bg-gradient-to-l from-black to-transparent z-20" />
     </div>
 
-    <div class="px-6 md:px-16 max-w-7xl mx-auto mt-3 reveal">
+    <div class="relative z-10 px-6 md:px-16 max-w-7xl mx-auto mt-3 reveal">
       <div class="flex flex-wrap items-center gap-2 font-mono text-[11px] uppercase tracking-widest text-white/40">
         <span>elsewhere ·</span>
         <span v-for="g in otherGames" :key="g" class="pill border hairline px-2 py-1 text-xs text-white/80" data-magnetic>{{ g }}</span>
@@ -140,6 +156,52 @@ function shuffle() {
 </template>
 
 <style scoped>
+.game-backdrop {
+  position: absolute;
+  inset: -18% -12%;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+  opacity: 0.36;
+  filter: saturate(1.2) contrast(1.05);
+}
+
+.game-backdrop::after {
+  content: '';
+  position: absolute;
+  inset: -2%;
+  background:
+    linear-gradient(180deg, rgba(0, 0, 0, 0.42), rgba(0, 0, 0, 0.72) 44%, rgba(0, 0, 0, 0.86)),
+    radial-gradient(ellipse at 50% 20%, rgba(255, 255, 255, 0.12), transparent 46%);
+}
+
+.backdrop-track {
+  position: absolute;
+  left: -8%;
+  display: flex;
+  width: max-content;
+  gap: 0.8rem;
+  transform: rotate(-8deg);
+  animation: cover-drift 120s linear infinite;
+}
+
+.backdrop-track--top {
+  top: 2%;
+}
+
+.backdrop-track--bottom {
+  bottom: -2%;
+  animation-direction: reverse;
+}
+
+.backdrop-track img {
+  width: clamp(74px, 8vw, 132px);
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+  opacity: 0.58;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.42);
+}
+
 .lanes {
   display: flex;
   flex-direction: column;
@@ -161,6 +223,11 @@ function shuffle() {
   to   { transform: translate3d(-50%, 0, 0); }
 }
 
+@keyframes cover-drift {
+  from { translate: 0 0; }
+  to { translate: -50% 0; }
+}
+
 .game-card { transition: transform .4s ease; }
 .game-card:hover { transform: translateY(-6px); z-index: 5; }
 
@@ -173,8 +240,8 @@ function shuffle() {
   pointer-events: none;
   z-index: 10;
   background: rgba(0, 0, 0, 0.6);
-  backdrop-filter: grayscale(1) brightness(0.5) contrast(0.95);
-  -webkit-backdrop-filter: grayscale(1) brightness(0.5) contrast(0.95);
+  backdrop-filter: brightness(0.56) contrast(0.98);
+  -webkit-backdrop-filter: brightness(0.56) contrast(0.98);
   /* CONIC mask centered at the top-left corner (0% 0%).
      CSS conic-gradient: 0deg points up, 90deg right, 180deg down.
      We let the cone open into the down-right quadrant.
@@ -258,7 +325,7 @@ function shuffle() {
   background: radial-gradient(
     circle,
     rgba(255, 255, 255, 0.14) 0%,
-    rgba(102, 192, 244, 0.1) 36%,
+    rgba(180, 180, 180, 0.1) 36%,
     rgba(255, 255, 255, 0.0) 72%
   );
   mix-blend-mode: screen;
@@ -268,6 +335,7 @@ function shuffle() {
 
 @media (prefers-reduced-motion: reduce) {
   .lane-track { animation: none; }
+  .backdrop-track { animation: none; }
   .ray { animation: none; }
 }
 </style>

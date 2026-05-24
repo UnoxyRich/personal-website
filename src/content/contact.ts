@@ -1,7 +1,9 @@
+import { palette } from '../theme/palette'
+
 export interface Contact { label: string; value: string; color: string }
 
 export const contacts: Contact[] = [
-  { label: 'Discord', value: 'unoxyrich',        color: '#5865f2' },
-  { label: 'WeChat',  value: 'unoxyrich',        color: '#07c160' },
-  { label: 'Email',   value: 'unoxyrich@qq.com', color: '#ea4335' },
+  { label: 'Discord', value: 'unoxyrich',        color: palette.primary },
+  { label: 'WeChat',  value: 'unoxyrich',        color: palette.secondary },
+  { label: 'Email',   value: 'unoxyrich@qq.com', color: palette.tertiary },
 ]

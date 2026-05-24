@@ -91,8 +91,14 @@ function initThree() {
 
   const tick = () => {
     const isHero = props.activeIndex === 0
+    const compact = window.innerWidth < 768
     const target = isHero
-      ? { x: mx, y: -my, scale: 1, opacity: 1 }
+      ? {
+          x: compact ? 0.7 + mx * 0.25 : mx,
+          y: compact ? 0.2 - my * 0.25 : -my,
+          scale: compact ? 1.08 : 1.34,
+          opacity: 1,
+        }
       : { x: -1.9 + mx * 0.18, y: 0.12 - my * 0.12, scale: 0.58, opacity: 0.24 }
 
     state.x += (target.x - state.x) * 0.055
